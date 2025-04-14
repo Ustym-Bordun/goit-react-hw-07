@@ -1,8 +1,8 @@
-import { useDispatch } from 'react-redux';
-// import { deleteContact } from '../../redux/contactsSlice';
-
-// import clsx from 'clsx';
 import { FaPhone, FaUser } from 'react-icons/fa6';
+// import clsx from 'clsx';
+
+import { useDispatch } from 'react-redux';
+import { deleteContact } from '../../redux/contactsOps';
 
 import css from './Contact.module.css';
 
@@ -24,9 +24,10 @@ const Contact = ({ contact: { id, name, number } }) => {
       <button
         className={css.btn}
         type="button"
-        onClick={() => {
-          console.log(id);
-          // dispatch(deleteContact(id));
+        onClick={e => {
+          // console.log(id);
+          dispatch(deleteContact(id));
+          e.target.disabled = true;
         }}
       >
         Delete

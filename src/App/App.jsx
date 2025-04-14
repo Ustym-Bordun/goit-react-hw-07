@@ -1,4 +1,16 @@
-// import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  selectContacts,
+  selectError,
+  selectFilteredContacts,
+  selectLoading,
+  selectShowLoading,
+} from '../redux/contactsSlice';
+import { selectNameFilter } from '../redux/filtersSlice';
+
+import { fetchContacts } from '../redux/contactsOps';
 
 import css from './App.module.css';
 
@@ -10,13 +22,24 @@ import ContactForm from '../components/ContactForm/ContactForm';
 import SearchBox from '../components/SearchBox/SearchBox';
 import ContactList from '../components/ContactList/ContactList';
 import Notification from '../components/Notification/Notification';
+import { MainLoader } from '../components/Loaders/Loaders';
+import ErrorMessage from '../components/ErrorMessage/ErrorMessage';
 
 function App() {
-  // const contacts = useSelector(state => state.contacts.items);
-  // const filter = useSelector(state => state.filters.name);
-  // const visibleContacts = contacts.filter(contact =>
-  //   contact.name.toLowerCase().includes(filter.toLowerCase())
-  // );
+  const contacts = useSelector(selectContacts);
+  const filter = useSelector(selectNameFilter);
+  const visibleContacts = useSelector(selectFilteredContacts);
+
+  const isLoading = useSelector(selectLoading);
+  const error = useSelector(selectError);
+
+  const showLoading = useSelector(selectShowLoading);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <Section>
@@ -24,11 +47,15 @@ function App() {
         <div className={css.wrapper}>
           <Heading title="Phonebook" bottom />
 
-          {/* <ContactForm /> */}
+          <ContactForm />
 
-          {/* <SearchBox /> */}
+          <SearchBox />
 
-          {/* {contacts.length > 0 ? (
+          {error ? (
+            <ErrorMessage text={error} />
+          ) : isLoading && showLoading ? (
+            <MainLoader />
+          ) : contacts.length > 0 ? (
             visibleContacts.length > 0 ? (
               <ContactList />
             ) : (
@@ -41,7 +68,7 @@ function App() {
             <>
               <Notification text="You don't have any contacts saved" />
             </>
-          )} */}
+          )}
         </div>
       </Container>
     </Section>
