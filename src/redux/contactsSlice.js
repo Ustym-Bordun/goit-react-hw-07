@@ -19,7 +19,8 @@ const slice = createSlice({
     loading: false,
     error: null,
 
-    showLoading: true,
+    deletingContactId: null,
+    addingNewContact: false,
   },
   reducers: {},
   extraReducers: builder => {
@@ -33,29 +34,37 @@ const slice = createSlice({
 
       .addCase(addContact.pending, state => {
         state.error = null;
-        state.loading = true;
-        state.showLoading = false;
+
+        state.addingNewContact = true;
       })
       .addCase(addContact.fulfilled, (state, action) => {
-        state.loading = false;
-        state.showLoading = true;
         state.items.push(action.payload);
-      })
-      .addCase(addContact.rejected, handleRejected)
 
-      .addCase(deleteContact.pending, state => {
+        state.addingNewContact = false;
+      })
+      .addCase(addContact.rejected, (state, action) => {
+        state.error = action.payload;
+
+        state.addingNewContact = false;
+      })
+
+      .addCase(deleteContact.pending, (state, action) => {
         state.error = null;
-        state.loading = true;
-        state.showLoading = false;
+
+        state.deletingContactId = action.meta.arg;
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
-        state.loading = false;
-        state.showLoading = true;
         state.items = state.items.filter(
           contact => contact.id !== action.payload.id
         );
+
+        state.deletingContactId = null;
       })
-      .addCase(deleteContact.rejected, handleRejected);
+      .addCase(deleteContact.rejected, (state, action) => {
+        state.error = action.payload;
+
+        state.deletingContactId = null;
+      });
   },
 });
 
@@ -65,17 +74,15 @@ export const selectContacts = state => state.contacts.items;
 export const selectLoading = state => state.contacts.loading;
 export const selectError = state => state.contacts.error;
 
-export const selectShowLoading = state => state.contacts.showLoading;
-
 export const selectFilteredContacts = createSelector(
   [selectContacts, selectNameFilter],
   (contacts, filter) => {
-    console.log(contacts);
-    console.log('selectVisibleTasks', Date.now());
     const filteredContacts = contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
-
     return filteredContacts;
   }
 );
+
+export const selectDeletingContactId = state => state.contacts.deletingContactId;
+export const selectAddingNewContact = state => state.contacts.addingNewContact;

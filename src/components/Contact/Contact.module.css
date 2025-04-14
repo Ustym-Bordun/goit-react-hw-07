@@ -2,6 +2,10 @@
   display: flex;
   align-items: center;
 
+  column-gap: 10px;
+
+  height: 100%;
+
   padding: 20px;
   border-radius: 10px;
   background-color: rgba(29, 29, 29, 0.85);

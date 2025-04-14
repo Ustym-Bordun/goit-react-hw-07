@@ -1,12 +1,15 @@
-# React + Vite
+# GoIT React Homework 07
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Цей проєкт є сьомим домашнім завданням для курсу React, створеним за допомогою Vite. Він зосереджений на використанні Redux Toolkit та асинхронних операцій для роботи з глобальним станом і API-запитами.
 
-Currently, two official plugins are available:
+### Основні можливості:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Використання redux та react-redux для управління глобальним станом
+- Інтеграція з createAsyncThunk для обробки асинхронних запитів
+- Робота з API: отримання, створення та видалення даних
 
-## Expanding the ESLint configuration
+- Компонентний підхід у React
+- Покращені стилі для зручності користувача
+- Використання сучасних інструментів розробки
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Переглянути можна за посиланням: [GoIT React HW-07](https://goit-react-hw-07-jet-pi.vercel.app/)

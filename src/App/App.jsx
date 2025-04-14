@@ -3,10 +3,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectContacts,
+  selectLoading,
   selectError,
   selectFilteredContacts,
-  selectLoading,
-  selectShowLoading,
 } from '../redux/contactsSlice';
 import { selectNameFilter } from '../redux/filtersSlice';
 
@@ -33,8 +32,6 @@ function App() {
   const isLoading = useSelector(selectLoading);
   const error = useSelector(selectError);
 
-  const showLoading = useSelector(selectShowLoading);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -53,7 +50,7 @@ function App() {
 
           {error ? (
             <ErrorMessage text={error} />
-          ) : isLoading && showLoading ? (
+          ) : isLoading ? (
             <MainLoader />
           ) : contacts.length > 0 ? (
             visibleContacts.length > 0 ? (
